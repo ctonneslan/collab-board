@@ -8,6 +8,7 @@ import {
   cleanup,
   getRandomColor,
   getRandomName,
+  isDemo,
   type CursorInfo,
 } from "@/lib/collab";
 import type { Tool } from "./Toolbar";
@@ -95,6 +96,11 @@ export default function Board() {
 
   return (
     <>
+      {isDemo() && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs px-4 py-2 rounded-lg">
+          Demo mode: drawing works locally. Connect a WebSocket server for multi-user sync.
+        </div>
+      )}
       <Toolbar
         tool={tool}
         setTool={setTool}
