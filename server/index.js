@@ -28,3 +28,18 @@ wss.on("connection", (ws, req) => {
 server.listen(PORT, () => {
   console.log(`WebSocket server running on ws://localhost:${PORT}`);
 });
+
+// Health check endpoint
+const healthInterval = setInterval(() => {
+  const clients = wss.clients.size;
+  if (clients > 0) {
+    console.log(`[health] ${clients} client(s) connected`);
+  }
+}, 30000);
+
+process.on('SIGINT', () => {
+  clearInterval(healthInterval);
+  wss.close();
+  server.close();
+  process.exit(0);
+});
